@@ -19,12 +19,12 @@ jobs:
 
           - name: Windows MSVC Win32
             os: windows-latest
-            compiler: cl.exe
+            compiler: cl
             vcvars: vcvars32.bat
 
           - name: Windows MSVC Win64
             os: windows-latest
-            compiler: cl.exe
+            compiler: cl
             vcvars: vcvars64.bat
 
           - name: Windows GCC
