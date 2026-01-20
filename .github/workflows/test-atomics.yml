@@ -19,11 +19,11 @@ jobs:
 
           - name: Windows MSVC Win32
             os: windows-latest
-            compiler: cl
+            compiler: cl.exe
 
           - name: Windows MSVC Win64
             os: windows-latest
-            compiler: cl
+            compiler: cl.exe
 
           - name: Windows GCC
             os: windows-latest
