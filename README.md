@@ -4,7 +4,7 @@ This repository tests whether various CI runners properly support and advertise 
 
 ## Purpose
 
-Discovere github runners that fail to build code that uses mintomic as a fallback for platforms without C11 atomics. 
+Discover github runners that fail to build code that uses mintomic as a fallback for platforms without C11 atomics. 
 The issue is that mintomic doesn't support ARM64, but it should never be used on modern OS since C11 atomics are available.
 
 This test verifies that:
