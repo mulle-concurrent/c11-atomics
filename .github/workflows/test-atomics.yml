@@ -41,14 +41,26 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Compile test
+      - name: Compile detection test
         shell: bash
         run: |
           ${{ matrix.compiler }} -o test-atomics test-atomics.c
         env:
           CC: ${{ matrix.compiler }}
 
-      - name: Run test
+      - name: Run detection test
         shell: bash
         run: |
           ./test-atomics
+
+      - name: Compile direct test
+        shell: bash
+        run: |
+          ${{ matrix.compiler }} -o test-atomics-direct test-atomics-direct.c
+        env:
+          CC: ${{ matrix.compiler }}
+
+      - name: Run direct test
+        shell: bash
+        run: |
+          ./test-atomics-direct
