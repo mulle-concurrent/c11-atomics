@@ -4,7 +4,8 @@ This repository tests whether various CI runners properly support and advertise 
 
 ## Purpose
 
-We discovered that macOS 15 ARM64 runners were failing to build code that uses mintomic as a fallback for platforms without C11 atomics. The issue is that mintomic doesn't support ARM64, but it should never be used on modern macOS since C11 atomics are available.
+Discovere github runners that fail to build code that uses mintomic as a fallback for platforms without C11 atomics. 
+The issue is that mintomic doesn't support ARM64, but it should never be used on modern OS since C11 atomics are available.
 
 This test verifies that:
 1. The compiler properly advertises C11 atomic support via `__has_include(<stdatomic.h>)`
@@ -28,3 +29,5 @@ All modern platforms should support C11 atomics. If any fail, it indicates:
 ## Usage
 
 The workflow runs automatically on push. Check the Actions tab to see results for each platform.
+
+![vibecoded](https://www.mulle-kybernetik.com/pix/heartlessly-vibecoded.png)
