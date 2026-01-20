@@ -19,11 +19,11 @@ jobs:
 
           - name: Windows MSVC Win32
             os: windows-latest
-            compiler: cl.exe
+            compiler: cl
 
           - name: Windows MSVC Win64
             os: windows-latest
-            compiler: cl.exe
+            compiler: cl
 
           - name: Windows GCC
             os: windows-latest
@@ -44,23 +44,41 @@ jobs:
       - name: Compile detection test
         shell: bash
         run: |
-          ${{ matrix.compiler }} -o test-atomics test-atomics.c
+          if [ "${{ matrix.compiler }}" = "cl.exe" ]; then
+            # MSVC needs special handling
+            "${{ matrix.compiler }}" /Fe:test-atomics.exe test-atomics.c
+          else
+            ${{ matrix.compiler }} -o test-atomics test-atomics.c
+          fi
         env:
           CC: ${{ matrix.compiler }}
 
       - name: Run detection test
         shell: bash
         run: |
-          ./test-atomics
+          if [ "$RUNNER_OS" = "Windows" ]; then
+            ./test-atomics.exe
+          else
+            ./test-atomics
+          fi
 
       - name: Compile direct test
         shell: bash
         run: |
-          ${{ matrix.compiler }} -o test-atomics-direct test-atomics-direct.c
+          if [ "${{ matrix.compiler }}" = "cl.exe" ]; then
+            # MSVC needs special handling
+            "${{ matrix.compiler }}" /Fe:test-atomics-direct.exe test-atomics-direct.c
+          else
+            ${{ matrix.compiler }} -o test-atomics-direct test-atomics-direct.c
+          fi
         env:
           CC: ${{ matrix.compiler }}
 
       - name: Run direct test
         shell: bash
         run: |
-          ./test-atomics-direct
+          if [ "$RUNNER_OS" = "Windows" ]; then
+            ./test-atomics-direct.exe
+          else
+            ./test-atomics-direct
+          fi
