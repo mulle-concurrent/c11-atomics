@@ -67,7 +67,7 @@ jobs:
 
       - name: Compile & run detection test (MSVC)
         if: ${{ matrix.setup_msvc }}
-        shell: ${{ matrix.shell }}
+        shell: cmd
         run: |
           call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" ${{ matrix.vcvars_arch }}
           cl -nologo -std:c11 test-atomics.c -o test-atomics${{ matrix.exe_suffix }}
@@ -75,14 +75,14 @@ jobs:
 
       - name: Compile & run detection test (non-MSVC)
         if: ${{ !matrix.setup_msvc }}
-        shell: ${{ matrix.shell }}
+        shell: bash
         run: |
           ${{ matrix.compiler }} -std=c11 -o test-atomics${{ matrix.exe_suffix }} test-atomics.c
           ./test-atomics${{ matrix.exe_suffix }}
 
       - name: Compile & run direct test (MSVC)
         if: ${{ matrix.setup_msvc }}
-        shell: ${{ matrix.shell }}
+        shell: cmd
         run: |
           call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" ${{ matrix.vcvars_arch }}
           cl -nologo -std:c11 test-atomics-direct.c -o test-atomics-direct${{ matrix.exe_suffix }}
@@ -90,7 +90,7 @@ jobs:
 
       - name: Compile & run direct test (non-MSVC)
         if: ${{ !matrix.setup_msvc }}
-        shell: ${{ matrix.shell }}
+        shell: bash
         run: |
           ${{ matrix.compiler }} -std=c11 -o test-atomics-direct${{ matrix.exe_suffix }} test-atomics-direct.c
           ./test-atomics-direct${{ matrix.exe_suffix }}
