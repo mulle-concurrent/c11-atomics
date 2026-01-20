@@ -1,0 +1,54 @@
+name: C11 Atomics Detection
+on: [push, pull_request]
+
+jobs:
+  test-atomics:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Ubuntu GCC
+            os: ubuntu-latest
+            compiler: gcc
+            
+          - name: Ubuntu Clang
+            os: ubuntu-latest
+            compiler: clang
+
+          - name: Windows MSVC Win32
+            os: windows-latest
+            compiler: cl
+
+          - name: Windows MSVC Win64
+            os: windows-latest
+            compiler: cl
+
+          - name: Windows GCC
+            os: windows-latest
+            compiler: gcc
+
+          - name: macOS Clang
+            os: macos-latest
+            compiler: clang
+
+          - name: macOS GCC
+            os: macos-latest
+            compiler: gcc
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Compile test
+        shell: bash
+        run: |
+          ${{ matrix.compiler }} -o test-atomics test-atomics.c
+        env:
+          CC: ${{ matrix.compiler }}
+
+      - name: Run test
+        shell: bash
+        run: |
+          ./test-atomics
