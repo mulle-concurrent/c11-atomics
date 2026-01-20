@@ -23,7 +23,7 @@ int main(void)
     printf("  <stdatomic.h>: found\n");
     
     // Test basic atomic operations
-    atomic_int counter = ATOMIC_VAR_INIT(0);
+    atomic_int counter = 0;  // Direct initialization (ATOMIC_VAR_INIT is deprecated)
     atomic_fetch_add(&counter, 1);
     int value = atomic_load(&counter);
     

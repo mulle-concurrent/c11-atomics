@@ -6,14 +6,14 @@ int main(void)
     printf("Testing direct <stdatomic.h> include...\n");
     
     // Test basic atomic operations
-    atomic_int counter = ATOMIC_VAR_INIT(42);
+    atomic_int counter = 0;  // Direct initialization (ATOMIC_VAR_INIT is deprecated)
     
     // Test compare-and-swap
-    int expected = 42;
+    int expected = 0;
     int desired = 100;
     
     if (atomic_compare_exchange_strong(&counter, &expected, desired)) {
-        printf("SUCCESS: CAS succeeded (42 -> 100)\n");
+        printf("SUCCESS: CAS succeeded (0 -> 100)\n");
     } else {
         printf("FAIL: CAS failed\n");
         return 1;
